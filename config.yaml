@@ -1,0 +1,42 @@
+project: Agricultural Yield Forecasting & Farmland Monitoring
+targets:
+  - North-Central Nigeria
+  - Northwest Nigeria
+
+crops:
+  - maize
+  - sorghum
+  - millet
+  - rice
+  - groundnut
+
+satellite:
+  source: Sentinel-2 / Landsat-8
+  ndvi_band: B8, B4
+  evi_band: B8, B4, B2
+  temporal_resolution: 16  # days
+
+weather:
+  source: ERA5 Reanalysis
+  variables:
+    - temperature_mean
+    - temperature_max
+    - temperature_min
+    - precipitation
+    - solar_radiation
+    - wind_speed
+
+model:
+  algorithm: LightGBM
+  n_estimators: 500
+  learning_rate: 0.05
+  max_depth: 8
+  test_size: 0.2
+  random_state: 42
+  cv_folds: 5
+
+output:
+  yield_map: "outputs/yield_forecast_map.html"
+  model_path: "models/yield_model.pkl"
+  report: "outputs/yield_forecast_report.csv"
+  underperforming: "outputs/underperforming_farms.csv"
